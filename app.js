@@ -12,5 +12,5 @@ app.listen(PORT, () => {
 })
 
 app.get('/health', (req, res) => {
-  res.send('ok')
+  res.status(200).json({ status: 'OK', message: 'Service is healthy', timestamp: new Date() })
 })
