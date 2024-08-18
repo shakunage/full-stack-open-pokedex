@@ -7,14 +7,14 @@ on:
     branches: [main]
     types: [opened, synchronize]
 env:
-  SKIP: ${{ contains('join(github.event.commits.*.message), , ', '#skip') }}
+  SKIP: ${{ contains(join(github.event.commits.message, ' '), '#skip') }}
 
 jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
     concurrency: deploy-group    # optional: ensure only one action runs at a time
-    if: ${{ github.event_name == 'push' && github.env.SKIP != 'true' }}
+    if: ${{ github.event_name == 'push' && github.env.SKIP == 'false' }}
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
@@ -22,7 +22,7 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
   tag_release:
-    if: ${{ github.env.SKIP != 'true' }}
+    if: ${{ github.env.SKIP == 'false' }}
     needs: [deploy]
     runs-on: ubuntu-20.04
     steps:
