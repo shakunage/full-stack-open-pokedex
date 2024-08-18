@@ -1,0 +1,32 @@
+.list-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
+  }
+  
+  .list-item {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    padding: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .list-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .list-item-name {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
