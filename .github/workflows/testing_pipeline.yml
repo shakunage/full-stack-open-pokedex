@@ -1,4 +1,4 @@
-name: Deployment pipeline
+name: Testing pipeline
 on:
     push:
       branches: [main]

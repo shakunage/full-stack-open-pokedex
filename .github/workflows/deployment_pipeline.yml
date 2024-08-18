@@ -1,4 +1,4 @@
-name: Deployment & Versioning pipeline
+name: Deployment & versioning pipeline
 # See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
 on:
   push:
