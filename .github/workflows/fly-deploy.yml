@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
     concurrency: deploy-group    # optional: ensure only one action runs at a time
+    if: ${{ github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
