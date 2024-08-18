@@ -11,7 +11,6 @@ jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' }}
     concurrency: deploy-group    # optional: ensure only one action runs at a time
     if: ${{ github.event_name == 'push' }}
     steps:
