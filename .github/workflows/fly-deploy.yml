@@ -37,4 +37,47 @@ jobs:
         WITH_V: true
         PRERELEASE: true
         DEFAULT_BUMP: patch
+  success_notification:
+    name: Successful deployment
+    runs-on: ubuntu-latest
+    needs: [deploy]
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        if: success()
+        with:
+          username: shakunage-cicd
+          description: A deployment was made and it has been observed as successful.
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: "deploy"
+          color: 0x09b81e
+  failure_notification:
+    name: Failed deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        if: failure()
+        with:
+          username: shakunage-cicd
+          description: |
+            A deployment was attempted but it has been observed as failed.
+            Commit SHA: `${{ github.sha }}`
+            Link to repo: [${{ github.repository }}](${{ github.event.repository.html_url }})
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: "failed"
+          color: 0xb50a04
+  cancelled_notification:
+    name: Cancelled deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        if: cancelled()
+        with:
+          username: shakunage-cicd
+          description: Deployment Cancelled!
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: "cancelled"
+          color: 0xfcba03
 
