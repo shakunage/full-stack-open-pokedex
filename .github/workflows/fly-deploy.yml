@@ -6,15 +6,13 @@ on:
   pull_request:
     branches: [main]
     types: [opened, synchronize]
-env:
-  SKIP: ${{ contains(join(github.event.commits.message, ' '), '#skip') }}
 
 jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
     concurrency: deploy-group    # optional: ensure only one action runs at a time
-    if: ${{ github.event_name == 'push' && github.env.SKIP == 'false' }}
+    if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip')}}
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
