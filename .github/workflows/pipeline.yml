@@ -42,10 +42,8 @@ jobs:
           description: |
             Some tests were failed in the pipeline.
             Commit SHA: `${{ github.sha }}`
-            Link to repo: [${{ github.repository }}](${{ github.event.repository.html_url }})
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: "failed"
           color: 0xb50a04
   cancelled_notification:
     name: Cancelled deployment
@@ -59,6 +57,5 @@ jobs:
           description: Pipeline Cancelled!
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
-          title: "cancelled"
           color: 0xfcba03
         
