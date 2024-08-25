@@ -30,3 +30,33 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5000
+  failure_notification:
+    name: Build failed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        if: failure()
+        with:
+          username: shakunage-cicd
+          description: |
+            Some tests were failed in the pipeline.
+            Commit SHA: `${{ github.sha }}`
+            Link to repo: [${{ github.repository }}](${{ github.event.repository.html_url }})
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: "failed"
+          color: 0xb50a04
+  cancelled_notification:
+    name: Cancelled deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: sarisia/actions-status-discord@v1
+        if: cancelled()
+        with:
+          username: shakunage-cicd
+          description: Pipeline Cancelled!
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ job.status }}
+          title: "cancelled"
+          color: 0xfcba03
+        
